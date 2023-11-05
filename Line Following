@@ -1,0 +1,64 @@
+#include <LiquidCrystal.h>
+
+int in1 = A1;
+int in2 = A2;
+int in3 = A3;
+int in4 = A4;
+int leftsensorpin = 3 ;
+int rightsensorpin = A5 ;
+ 
+
+const int rs=8,en=9,d4=4,d5=5,d6=6,d7=7;
+
+LiquidCrystal lcd(rs,en,d4,d5,d6,d7);
+
+void setup() {
+  //Serial.begin(9600);
+  pinMode(leftsensorpin, INPUT);
+  pinMode(rightsensorpin, INPUT);
+      
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  lcd.begin(16,2);
+  
+    lcd.setCursor(0,0);
+    lcd.print("Proton MiewMiew");
+    lcd.setCursor(0,1);
+    lcd.print("Time: ");
+
+}
+
+void loop() {
+  
+  
+  int leftSensorValue = digitalRead(leftsensorpin);
+  int rightSensorValue = digitalRead(rightsensorpin);
+
+  /*Serial.print("leftsensorvalue");
+  Serial.println(leftSensorValue);
+  Serial.print("rightsensorvalue");
+  Serial.println(rightSensorValue);
+  delay(1000);*/
+
+  if (leftSensorValue == LOW && rightSensorValue == LOW) {
+    // Both sensors detect the line, move forward.
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+  } else if (leftSensorValue == HIGH && rightSensorValue == LOW) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+  } else if (leftSensorValue == LOW && rightSensorValue == HIGH) {
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+  } 
+
+}
